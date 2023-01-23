@@ -25,7 +25,7 @@ void *_calloc(unsigned int nmemb, unsigned int size)
 	}
 	return (p);
 
-
+}
 /**
  * _realloc - change the size and copy the content
  * @ptr: malloc pointer to reallocate
@@ -51,7 +51,6 @@ void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size)
 	{
 		free(ptr);
 	return (NULL);
-
 	}
 	if (new_size > old_size)
 	{
