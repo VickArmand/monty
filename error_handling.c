@@ -33,6 +33,8 @@ void execute_instruction(char *line, unsigned int line_number,
 		{NULL, NULL}
 	};
 
+	if (line[0] == '#')
+		return;
 	argv = tokenize_instruction(line);
 	while (inst[j].opcode != NULL)
 	{
@@ -42,14 +44,12 @@ void execute_instruction(char *line, unsigned int line_number,
 				s.flag = 1;
 			isfound = 1;
 			inst[j].f(&top, line_number);
-		}
-		j++;
+		} j++;
 	}
 	if (isfound == 0)
 	{
 		fprintf(stderr, "L%d: unknown instruction %s\n", line_number, argv);
-		free_stack(top), free(line), fclose(fp);
-		exit(EXIT_FAILURE);
+		free_stack(top), free(line), fclose(fp), exit(EXIT_FAILURE);
 	}
 	(void)s;
 }
