@@ -21,6 +21,7 @@ void pchar(stack_t **stack, unsigned int line_number)
 		{
 			free_stack(*stack);
 			fprintf(stderr, "L%d : can't pchar, value out of range\n", line_number);
+			free_stack(s.top), free(s.line), fclose(s.fp);
 			exit(EXIT_FAILURE);
 		}
 	}
@@ -28,6 +29,7 @@ void pchar(stack_t **stack, unsigned int line_number)
 	{
 		free_stack(*stack);
 		fprintf(stderr, "L%d : can't pchar, stack empty\n", line_number);
+		free_stack(s.top), free(s.line), fclose(s.fp);
 		exit(EXIT_FAILURE);
 	}
 }
@@ -82,6 +84,7 @@ void rotl(stack_t **stack, unsigned int line_number)
 		(*stack)->next = NULL;
 		(*stack)->prev = current;
 		(*stack) = new_top;
+		s.top = *stack;
 		(void)(line_number);
 	}
 }
@@ -106,6 +109,7 @@ void rotr(stack_t **stack, unsigned int line_number)
 		current->prev->next = NULL;
 		current->prev = NULL;
 		*stack = current;
+		s.top = *stack;
 		(void)(line_number);
 	}
 }

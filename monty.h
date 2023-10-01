@@ -1,10 +1,10 @@
 #ifndef MONTY_H_
 #define MONTY_H_
 #define _GNU_SOURCE
-#include <stdlib.h>
-#include <unistd.h>
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
+#include <unistd.h>
 /**
  * struct stack_s - doubly linked list representation of a stack (or queue)
  * @n: integer
@@ -24,12 +24,18 @@ typedef struct stack_s
  * struct shared - stores shared variables
  * @data: value to be pushed
  * @flag: flag for identifying queue and stack operations
+ * @top: current top element of the stack
+ * @fp: File pointer of open file(bytecode)
+ * @line: string buffer
  * Description: shares values through out the program
  */
 typedef struct shared
 {
 	char *data;
 	int flag;
+	stack_t *top;
+	FILE *fp;
+	char *line;
 } shared_t;
 extern shared_t s;
 /**
@@ -45,14 +51,9 @@ typedef struct instruction_s
 	char *opcode;
 	void (*f)(stack_t **stack, unsigned int line_number);
 } instruction_t;
-int _strlen(char *s);
-int _strcmp(char *s1, char *s2);
-char *_strcpy(char *dest, char *src);
-char *_strcat(char *dest, char *src);
-char *_inttostr(unsigned int number);
 void free_stack(stack_t *stack);
 void execute_instruction(char *line, unsigned int line_number,
-		shared_t s, FILE *fp, stack_t *top);
+		shared_t s, FILE *fp);
 char *tokenize_instruction(char *line);
 void push(stack_t **stack, unsigned int line_number);
 void pall(stack_t **stack, unsigned int line_number);
@@ -69,5 +70,4 @@ void pstr(stack_t **stack, unsigned int line_number);
 void rotl(stack_t **stack, unsigned int line_number);
 void rotr(stack_t **stack, unsigned int line_number);
 void nop(stack_t **stack, unsigned int line_number);
-ssize_t read_textfile(const char *filename, size_t letters);
 #endif

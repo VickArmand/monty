@@ -6,50 +6,45 @@
  * @line_number: instruction line number
  * @s: shared variables structure
  * @fp: file pointer
- * @top: stack top
  * Return: void
  */
 void execute_instruction(char *line, unsigned int line_number,
-		shared_t s, FILE *fp, stack_t *top)
+		shared_t s, FILE *fp)
 {
-	char *argv;
-	int j = 0, isfound = 0;
+	char *token;
+	int j, isfound = 0;
 	instruction_t inst[] = {
-		{"push", push},
-		{"pop", pop},
-		{"pall", pall},
-		{"pint", pint},
-		{"swap", swap},
-		{"add", add},
-		{"sub", sub},
-		{"divide", divide},
-		{"mul", mul},
-		{"mod", mod},
-		{"pchar", pchar},
-		{"pstr", pstr},
-		{"rotl", rotl},
-		{"rotr", rotr},
-		{"nop", nop},
+		{"push", push}, {"pop", pop}, {"pall", pall},
+		{"pint", pint}, {"swap", swap}, {"add", add},
+		{"sub", sub}, {"divide", divide}, {"mul", mul},
+		{"mod", mod}, {"pchar", pchar}, {"pstr", pstr},
+		{"rotl", rotl}, {"rotr", rotr}, {"nop", nop},
 		{NULL, NULL}
 	};
 
 	if (line[0] == '#')
 		return;
-	argv = tokenize_instruction(line);
+	token = tokenize_instruction(line);
+	j = 0;
 	while (inst[j].opcode != NULL)
 	{
-		if (_strcmp(inst[j].opcode, argv) == 0)
+		if (strcmp(inst[j].opcode, token) == 0)
 		{
-			if (_strcmp(argv, "queue") == 0)
-				s.flag = 1;
 			isfound = 1;
-			inst[j].f(&top, line_number);
-		} j++;
+			if (strcmp(token, "queue") == 0)
+				s.flag = 1;
+			else if (strcmp(token, "stack") == 0)
+				s.flag = 0;
+			else
+				inst[j].f(&(s.top), line_number);
+			break;
+		}
+		j++;
 	}
 	if (isfound == 0)
 	{
-		fprintf(stderr, "L%d: unknown instruction %s\n", line_number, argv);
-		free_stack(top), free(line), fclose(fp), exit(EXIT_FAILURE);
+		fprintf(stderr, "L%d: unknown instruction %s\n", line_number, token);
+		free_stack(s.top), free(line), fclose(fp), exit(EXIT_FAILURE);
 	}
 	(void)s;
 }
@@ -60,7 +55,7 @@ void execute_instruction(char *line, unsigned int line_number,
  */
 char *tokenize_instruction(char *line)
 {
-	char *token;
+	char *token = NULL;
 
 	token = strtok(line, " \n\t");
 	s.data = strtok(NULL, " \n\t");
