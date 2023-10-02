@@ -19,17 +19,15 @@ void pchar(stack_t **stack, unsigned int line_number)
 		}
 		else
 		{
-			free_stack(*stack);
+			free_stack(*stack), free(s.line), fclose(s.fp);
 			fprintf(stderr, "L%d : can't pchar, value out of range\n", line_number);
-			free_stack(s.top), free(s.line), fclose(s.fp);
 			exit(EXIT_FAILURE);
 		}
 	}
 	else
 	{
-		free_stack(*stack);
+		free_stack(*stack), free(s.line), fclose(s.fp);
 		fprintf(stderr, "L%d : can't pchar, stack empty\n", line_number);
-		free_stack(s.top), free(s.line), fclose(s.fp);
 		exit(EXIT_FAILURE);
 	}
 }

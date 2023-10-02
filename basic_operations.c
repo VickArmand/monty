@@ -7,32 +7,19 @@
  */
 void push(stack_t **stack, unsigned int line_number)
 {
-	stack_t *new_top;
 	int data;
 
-	new_top = *stack;
 	data = atoi(s.data);
 	if ((data == 0 && strcmp(s.data, "0") != 0) || s.data == NULL)
 	{
-		free_stack(s.top);
+		free_stack(*stack), free(s.line), fclose(s.fp);
 		fprintf(stderr, "L%d: usage: push integer\n", line_number);
-		free_stack(s.top), free(s.line), fclose(s.fp);
 		exit(EXIT_FAILURE);
 	}
-	new_top = malloc(sizeof(stack_t));
-	if (new_top == NULL)
-	{
-		free(new_top), free_stack(s.top);
-		fprintf(stderr, "Error: malloc failed\n");
-		free_stack(s.top), free(s.line), fclose(s.fp), exit(EXIT_FAILURE);
-	}
-	if (s.top)
-		(s.top)->prev = new_top;
-	new_top->next = s.top;
-	new_top->n = data;
-	new_top->prev = NULL;
-	s.top = new_top;
-	(void)(line_number);
+	if (s.flag == 1)
+		queue_add(*stack, data);
+	else
+		stack_add(*stack, data);
 }
 /**
  * pall - prints all stack elements
@@ -80,9 +67,8 @@ void pop(stack_t **stack, unsigned int line_number)
 	}
 	else
 	{
-		free_stack(*stack);
+		free_stack(*stack), free(s.line), fclose(s.fp);
 		fprintf(stderr, "L%d: can't pop an empty stack\n", line_number);
-		free_stack(s.top), free(s.line), fclose(s.fp);
 		exit(EXIT_FAILURE);
 	}
 }
@@ -101,9 +87,8 @@ void pint(stack_t **stack, unsigned int line_number)
 	}
 	else
 	{
-		free_stack(*stack);
+		free_stack(*stack), free(s.line), fclose(s.fp);
 		fprintf(stderr, "L%d: can't pint, stack empty\n", line_number);
-		free_stack(s.top), free(s.line), fclose(s.fp);
 		exit(EXIT_FAILURE);
 	}
 }
@@ -130,9 +115,8 @@ void swap(stack_t **stack, unsigned int line_number)
 	}
 	else
 	{
-		free_stack(*stack);
+		free_stack(*stack), free(s.line), fclose(s.fp);
 		fprintf(stderr, "L%d: can't swap, stack too short\n", line_number);
-		free_stack(s.top), free(s.line), fclose(s.fp);
 		exit(EXIT_FAILURE);
 	}
 }
