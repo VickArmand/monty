@@ -50,7 +50,6 @@ void execute_instruction(char *line, unsigned int line_number,
 		free_stack(s.top), free(line), fclose(fp), exit(EXIT_FAILURE);
 	}
 	(void)s;
-	free_stack(s.top);
 }
 /**
  * tokenize_instruction - tokenizes a string and store it in an array

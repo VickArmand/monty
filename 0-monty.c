@@ -32,6 +32,7 @@ int main(int argc, char **argv)
 		execute_instruction(line, line_number, s, fp);
 	}
 	fclose(fp);
+	free_stack(s.top);
 	free(line);
 	return (0);
 }
