@@ -51,13 +51,14 @@ void pstr(stack_t **stack, unsigned int line_number)
 			if (current->n > 0 && current->n < 127)
 			{
 				i = current->n;
-				fprintf(stdout, "%d\n", i);
+				fprintf(stdout, "%c", i);
 				(void)(line_number);
 			}
 			else
 				break;
 			current = current->next;
 		}
+		fprintf(stdout, "\n");
 	}
 }
 /**
