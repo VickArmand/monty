@@ -19,7 +19,6 @@ void queue_add(stack_t *stack, int data)
 		fprintf(stderr, "Error: malloc failed\n");
 		exit(EXIT_FAILURE);
 	}
-	printf("add");
 	new_top->next = NULL;
 	new_top->n = data;
 	if (stack)

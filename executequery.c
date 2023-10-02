@@ -44,7 +44,6 @@ void execute_instruction(char *line, unsigned int line_number,
 		}
 	}
 	s.flag = isqueue;
-	printf("ssss %d %d\n", line_number, s.flag);
 	if (isfound == 0)
 	{
 		fprintf(stderr, "L%d: unknown instruction %s\n", line_number, token);
