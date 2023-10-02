@@ -16,7 +16,7 @@ void execute_instruction(char *line, unsigned int line_number,
 	instruction_t inst[] = {
 		{"push", push}, {"pop", pop}, {"pall", pall},
 		{"pint", pint}, {"swap", swap}, {"add", add},
-		{"sub", sub}, {"divide", divide}, {"mul", mul},
+		{"sub", sub}, {"div", divide}, {"mul", mul},
 		{"mod", mod}, {"pchar", pchar}, {"pstr", pstr},
 		{"rotl", rotl}, {"rotr", rotr}, {"nop", nop},
 		{NULL, NULL}
